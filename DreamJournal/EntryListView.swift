@@ -8,17 +8,41 @@
 import SwiftUI
 
 struct EntryListView: View {
+    
+    @State var viewModel = EntryListViewModel()
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(Range(1..<5) { item in
-                    VStack {
-                        Text("This is my Title")
-                        Text("This is my body, all of the details of my dream will be written here")
+                Section("My Entries") {
+                    ForEach(viewModel.entries) { entry in
+                    NavigationLink {
+                        //Destination
+                        DetailView(entry: entry)
+                    } label: {
+                        //what our navigation link looks like
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text(entry.title)
+                                .bold()
+                                .font(.headline)
+                            Text(entry.body)
+                                .font(.system(size: 14))
+                        }.padding()
                     }
                 }
             }
-                    .navigationTitle("Dream Journal")
+        }
+            .listStyle(.plain)
+            .navigationTitle("Dream Journal")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        DetailView()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
         }
     }
 }
