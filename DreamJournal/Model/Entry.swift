@@ -13,10 +13,13 @@ import Foundation
 //structs are value-types (classes are reference types)
 //Structs are lightweight
 
-struct Entry: Identifiable {
+struct Entry: Identifiable, Codable {
     var title: String
     var body: String
     //these are default values for properties we will never edit
     var date = Date()
     var id = UUID()
+}
+
+extension Entry: Equatable {
 }
